@@ -1,0 +1,22 @@
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form method="post">
+    <div>
+        <label for="userName">Username:</label>
+        <input type="text" id="userName" name="userName" required />
+    </div>
+    <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required />
+    </div>
+    <div>
+        <input type="submit" value="Login" />
+    </div>
+    <p>@ViewBag.ErrorMessage</p>
+</form>
+@* This is a simple login form. The form submits to the same action method. *@
+@* The error message is displayed if the login fails. *@
