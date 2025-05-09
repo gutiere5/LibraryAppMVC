@@ -1,33 +1,26 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Elber.Gutierrez\\dotnet-course-code\\LibraryAppMVC\\LibraryAppMVC.csproj": {}
+    "C:\\Users\\elgu4\\dotnet-course-code\\LibraryAppMVC\\LibraryAppMVC.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Elber.Gutierrez\\dotnet-course-code\\LibraryAppMVC\\LibraryAppMVC.csproj": {
+    "C:\\Users\\elgu4\\dotnet-course-code\\LibraryAppMVC\\LibraryAppMVC.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Elber.Gutierrez\\dotnet-course-code\\LibraryAppMVC\\LibraryAppMVC.csproj",
+        "projectUniqueName": "C:\\Users\\elgu4\\dotnet-course-code\\LibraryAppMVC\\LibraryAppMVC.csproj",
         "projectName": "LibraryAppMVC",
-        "projectPath": "C:\\Users\\Elber.Gutierrez\\dotnet-course-code\\LibraryAppMVC\\LibraryAppMVC.csproj",
-        "packagesPath": "C:\\Users\\Elber.Gutierrez\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Elber.Gutierrez\\dotnet-course-code\\LibraryAppMVC\\obj\\",
+        "projectPath": "C:\\Users\\elgu4\\dotnet-course-code\\LibraryAppMVC\\LibraryAppMVC.csproj",
+        "packagesPath": "C:\\Users\\elgu4\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\elgu4\\dotnet-course-code\\LibraryAppMVC\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Elber.Gutierrez\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\elgu4\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {},
-          "https://gpm.gentex.com/nuget/NuGet": {}
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net9.0": {
@@ -43,7 +36,7 @@
         "restoreAuditProperties": {
           "enableAudit": "true",
           "auditLevel": "low",
-          "auditMode": "all"
+          "auditMode": "direct"
         },
         "SdkAnalysisLevel": "9.0.100"
       },
@@ -95,7 +88,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

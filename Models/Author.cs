@@ -8,10 +8,11 @@ namespace LibraryAppMVC.Models
 
         [Required]
         [StringLength(100)]
-        public string FullName { get; set; }
+        public string FullName { get; set; } = "";
 
         [StringLength(1000)]
-        public string Biography { get; set; }
-        public ICollection<Book> Books { get; set; }
+        public string Biography { get; set; } = "";
+
+        public ICollection<Book>? Books { get; set; }
     }
 }

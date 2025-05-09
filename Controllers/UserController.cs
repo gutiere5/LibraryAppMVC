@@ -2,7 +2,6 @@ namespace LibraryAppMVC.Controllers
 {
     using LibraryAppMVC.Data;
     using LibraryAppMVC.Models;
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
 

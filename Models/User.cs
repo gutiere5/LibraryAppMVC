@@ -9,17 +9,17 @@ namespace LibraryAppMVC.Models
 
         [Required]
         [StringLength(100)]
-        public string UserName { get; set; }
+        public string UserName { get; set; } = "";
 
         [Required]
         [StringLength(100)]
-        public string Password { get; set; }
+        public string Password { get; set; } = "";
 
         [StringLength(100)]
-        public string Email { get; set; }
+        public string Email { get; set; } = "";
 
         // Navigation property
-        public string Role { get; set; } // e.g., "Admin", "Librarian", "Member"
-        public ICollection<Book> BorrowedBooks { get; set; }
+        public string? Role { get; set; } // e.g., "Admin", "Librarian", "Member"
+        public ICollection<Book>? BorrowedBooks { get; set; }
     }
 }

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("LibraryAppMVC")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+09daf913c5d6ae8c0f03ac5aeea04404884342d7")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7020b3389c0b59ba18026447d55528bce0767929")]
 [assembly: System.Reflection.AssemblyProductAttribute("LibraryAppMVC")]
 [assembly: System.Reflection.AssemblyTitleAttribute("LibraryAppMVC")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

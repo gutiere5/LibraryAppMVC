@@ -729,3 +729,4 @@ C:\Users\Elber.Gutierrez\dotnet-course-code\LibraryAppMVC\obj\Debug\net9.0\refin
 C:\Users\Elber.Gutierrez\dotnet-course-code\LibraryAppMVC\obj\Debug\net9.0\LibraryAppMVC.pdb
 C:\Users\Elber.Gutierrez\dotnet-course-code\LibraryAppMVC\obj\Debug\net9.0\LibraryAppMVC.genruntimeconfig.cache
 C:\Users\Elber.Gutierrez\dotnet-course-code\LibraryAppMVC\obj\Debug\net9.0\ref\LibraryAppMVC.dll
+c:\Users\elgu4\dotnet-course-code\LibraryAppMVC\obj\Debug\net9.0\LibraryAppMVC.sourcelink.json

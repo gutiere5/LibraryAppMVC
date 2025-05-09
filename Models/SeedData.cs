@@ -1,12 +1,8 @@
-using System;
-using System.Linq;
-using LibraryAppMVC.Data;
-using LibraryAppMVC.Models;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-
 namespace LibraryAppMVC.Models
 {
+    using LibraryAppMVC.Data;
+    using Microsoft.EntityFrameworkCore;
+
     public static class SeedData
     {
         public static void Initialize(IServiceProvider serviceProvider)

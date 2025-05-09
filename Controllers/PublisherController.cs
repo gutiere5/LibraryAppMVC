@@ -1,15 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using LibraryAppMVC.Data;
-using LibraryAppMVC.Models;
-
 namespace LibraryAppMVC.Controllers
 {
+    using LibraryAppMVC.Data;
+    using LibraryAppMVC.Models;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
+
     public class PublisherController : Controller
     {
         private readonly LibraryContext _context;
@@ -33,8 +28,7 @@ namespace LibraryAppMVC.Controllers
                 return NotFound();
             }
 
-            var publisher = await _context.Publishers
-                .FirstOrDefaultAsync(m => m.PublisherId == id);
+            var publisher = await _context.Publishers.FirstOrDefaultAsync(m => m.PublisherId == id);
             if (publisher == null)
             {
                 return NotFound();
@@ -54,7 +48,9 @@ namespace LibraryAppMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PublisherId,Name,Address")] Publisher publisher)
+        public async Task<IActionResult> Create(
+            [Bind("PublisherId,Name,Address")] Publisher publisher
+        )
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +82,10 @@ namespace LibraryAppMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PublisherId,Name,Address")] Publisher publisher)
+        public async Task<IActionResult> Edit(
+            int id,
+            [Bind("PublisherId,Name,Address")] Publisher publisher
+        )
         {
             if (id != publisher.PublisherId)
             {
@@ -124,8 +123,7 @@ namespace LibraryAppMVC.Controllers
                 return NotFound();
             }
 
-            var publisher = await _context.Publishers
-                .FirstOrDefaultAsync(m => m.PublisherId == id);
+            var publisher = await _context.Publishers.FirstOrDefaultAsync(m => m.PublisherId == id);
             if (publisher == null)
             {
                 return NotFound();
