@@ -1,6 +1,8 @@
 namespace LibraryAppMVC.Models
 {
+    using System.Security.Claims;
     using LibraryAppMVC.Data;
+    using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
 
@@ -11,6 +13,11 @@ namespace LibraryAppMVC.Models
         public AccountController(LibraryContext context)
         {
             _context = context;
+        }
+
+        public IActionResult AccessDenied()
+        {
+            return View();
         }
 
         // GET: Account/Login
@@ -28,17 +35,35 @@ namespace LibraryAppMVC.Models
                 u.UserName == username && u.Password == password
             );
 
-            if (user != null)
+            if (user == null)
             {
-                // Store the user info in the session or authentication system
-                HttpContext.Session.SetString("UserId", user.UserId.ToString());
-
-                return RedirectToAction("Dashboard", "User");
-            }
-            {
-                ViewBag.ErrorMessage = "Invalid credentials.";
+                TempData["ErrorMessage"] = "Invalid username or password.";
                 return View();
             }
+
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, user.UserName),
+                new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
+                new Claim(ClaimTypes.Role, user.Role.ToString()),
+            };
+
+            var identify = new ClaimsIdentity(claims, "LibraryApp");
+            var principal = new ClaimsPrincipal(identify);
+
+            await HttpContext.SignInAsync("LibraryApp", principal);
+
+            if (user.Role == "Admin")
+            {
+                return RedirectToAction("AdminDashboard", "Admin");
+            }
+            return RedirectToAction("UserDashboard", "User");
+        }
+
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync("LibraryApp");
+            return RedirectToAction("Login", "Account");
         }
     }
 }

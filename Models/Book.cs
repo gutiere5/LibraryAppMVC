@@ -17,9 +17,9 @@ namespace LibraryAppMVC.Models
         public int? BorrowerId { get; set; }
 
         // Navigation properties
-        public Author Author { get; set; }
-        public Publisher Publisher { get; set; }
-        public User Borrower { get; set; }
+        public Author? Author { get; set; }
+        public Publisher? Publisher { get; set; }
+        public User? Borrower { get; set; }
         public bool IsAvailable => BorrowerId == null;
     }
 }

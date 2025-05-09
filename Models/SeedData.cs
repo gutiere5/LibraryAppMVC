@@ -60,11 +60,10 @@ namespace LibraryAppMVC.Models
 
                 context.Publishers.AddRange(publisher1, publisher2);
 
-                // Seed Users (Borrowers)
                 var user1 = new User
                 {
                     UserName = "jdoe",
-                    Password = "Password123", // For seeding only; you’d hash this in a real app
+                    Password = "Password123",
                     Email = "jdoe@example.com",
                     Role = "Member",
                 };
@@ -79,9 +78,8 @@ namespace LibraryAppMVC.Models
 
                 context.Users.AddRange(user1, user2);
 
-                context.SaveChanges(); // Save to get their generated IDs
+                context.SaveChanges();
 
-                // Seed Books
                 var book1 = new Book
                 {
                     Title = "Clean Code",
@@ -97,10 +95,27 @@ namespace LibraryAppMVC.Models
                     ISBN = "9780201616224",
                     AuthorId = author2.AuthorId,
                     PublisherId = publisher2.PublisherId,
-                    BorrowerId = null, // Available
+                    BorrowerId = null,
+                };
+                var book3 = new Book
+                {
+                    Title = "Refactoring: Improving the Design of Existing Code",
+                    ISBN = "9780201485677",
+                    AuthorId = author1.AuthorId,
+                    PublisherId = publisher1.PublisherId,
+                    BorrowerId = null,
                 };
 
-                context.Books.AddRange(book1, book2);
+                var book4 = new Book
+                {
+                    Title = "Test-Driven Development: By Example",
+                    ISBN = "9780321146533",
+                    AuthorId = author2.AuthorId,
+                    PublisherId = publisher2.PublisherId,
+                    BorrowerId = null,
+                };
+
+                context.Books.AddRange(book1, book2, book3, book4);
 
                 context.SaveChanges();
             }

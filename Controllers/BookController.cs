@@ -2,6 +2,7 @@ namespace LibraryAppMVC.Controllers
 {
     using LibraryAppMVC.Data;
     using LibraryAppMVC.Models;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.EntityFrameworkCore;
@@ -37,6 +38,7 @@ namespace LibraryAppMVC.Controllers
         // POST: Book/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Book/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
@@ -47,7 +49,13 @@ namespace LibraryAppMVC.Controllers
             {
                 _context.Add(book);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+            }
+            if (!ModelState.IsValid)
+            {
+                foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    Console.WriteLine(error.ErrorMessage); // Log the error messages
+                }
             }
             ViewData["AuthorId"] = new SelectList(
                 _context.Authors,
@@ -55,17 +63,17 @@ namespace LibraryAppMVC.Controllers
                 "FullName",
                 book.AuthorId
             );
-            ViewData["BorrowerId"] = new SelectList(
-                _context.Users,
-                "UserId",
-                "Password",
-                book.BorrowerId
-            );
             ViewData["PublisherId"] = new SelectList(
                 _context.Publishers,
                 "PublisherId",
                 "Name",
                 book.PublisherId
+            );
+            ViewData["BorrowerId"] = new SelectList(
+                _context.Users,
+                "UserId",
+                "UserName",
+                book.BorrowerId
             );
             return View(book);
         }
@@ -201,10 +209,13 @@ namespace LibraryAppMVC.Controllers
             return _context.Books.Any(e => e.BookId == id);
         }
 
-        // GET: Books/Search
+        // GET: Book/Search
         public async Task<IActionResult> Search(string searchString)
         {
-            var books = from b in _context.Books select b;
+            var books = _context
+                .Books.Include(b => b.Author)
+                .Include(b => b.Publisher)
+                .AsQueryable();
 
             if (!string.IsNullOrEmpty(searchString))
             {
@@ -238,37 +249,60 @@ namespace LibraryAppMVC.Controllers
         }
 
         // GET: Books/Borrow/5
+        // filepath: c:\Users\Elber.Gutierrez\dotnet-course-code\LibraryAppMVC\Controllers\BookController.cs
+        [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Borrow(int? id)
         {
             if (id == null)
             {
-                return NotFound();
+                return BadRequest("Book ID is required.");
+            }
+
+            var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Unauthorized("User is not logged in.");
+            }
+
+            var user = await _context.Users.FindAsync(int.Parse(userId));
+            if (user == null)
+            {
+                return NotFound("User not found.");
             }
 
             var book = await _context.Books.FindAsync(id);
-
-            if (book == null || book.BorrowerId != null) // Check if already borrowed
+            if (book == null)
             {
-                ViewBag.Message = "This book is currently unavailable.";
-                return View("Error");
+                return NotFound("Book not found.");
             }
 
-            // Get current user
-            var userId = HttpContext.Session.GetString("UserId");
-            var user = await _context.Users.FindAsync(int.Parse(userId));
-
-            if (user == null)
+            if (book.BorrowerId != null)
             {
-                ViewBag.Message = "User not found.";
-                return View("Error");
+                return BadRequest("Book is already borrowed.");
             }
 
-            // Borrow the book
             book.BorrowerId = user.UserId;
-            _context.Update(book);
             await _context.SaveChangesAsync();
 
-            return RedirectToAction("Dashboard", "User");
+            TempData["SuccessMessage"] = "Book borrowed successfully!";
+            return RedirectToAction("Search");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Return(int bookId)
+        {
+            var book = await _context.Books.FindAsync(bookId);
+            if (book == null)
+            {
+                return NotFound();
+            }
+
+            book.BorrowerId = null;
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("UserDashboard", "User");
         }
     }
 }

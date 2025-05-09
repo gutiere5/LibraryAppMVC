@@ -2,9 +2,11 @@ namespace LibraryAppMVC.Controllers
 {
     using LibraryAppMVC.Data;
     using LibraryAppMVC.Models;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
 
+    // [Authorize(AuthenticationSchemes = "LibraryApp", Roles = "User")]
     public class UserController : Controller
     {
         private readonly LibraryContext _context;
@@ -20,29 +22,16 @@ namespace LibraryAppMVC.Controllers
             return View(await _context.Users.ToListAsync());
         }
 
-        // GET: User/Login
-        [HttpGet]
-        public IActionResult Login()
+        // GET: User/UserDashboard
+        public async Task<IActionResult> UserDashboard()
         {
-            return View();
-        }
+            var username = User.Identity.Name;
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(string userName, string password)
-        {
-            var user = await _context.Users.FirstOrDefaultAsync(u =>
-                u.UserName == userName && u.Password == password
-            );
+            var userBooks = await _context
+                .Books.Where(b => b.Borrower.UserName == username)
+                .ToListAsync();
 
-            if (user != null)
-            {
-                // For now, redirect to a dashboard or homepage
-                return RedirectToAction("Dashboard");
-            }
-
-            ViewBag.ErrorMessage = "Invalid username or password.";
-            return View();
+            return View(userBooks);
         }
 
         // GET: User/Details/5
@@ -175,12 +164,6 @@ namespace LibraryAppMVC.Controllers
         private bool UserExists(int id)
         {
             return _context.Users.Any(e => e.UserId == id);
-        }
-
-        // Get: User/Dashboard
-        public IActionResult Dashboard()
-        {
-            return View();
         }
     }
 }

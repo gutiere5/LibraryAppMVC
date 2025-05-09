@@ -1,0 +1,62 @@
+@model IEnumerable<LibraryAppMVC.Models.Book>
+
+<h2>Search Results</h2>
+
+<a href="/User/UserDashboard" class="btn btn-secondary mb-3">Go to Dashboard</a>
+
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
+@if (!Model.Any())
+{
+    <p>No books found matching your search criteria.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>ISBN</th>
+                <th>Author</th>
+                <th>Publisher</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var book in Model)
+            {
+                <tr>
+                    <td>@book.Title</td>
+                    <td>@book.ISBN</td>
+                    <td>@book.Author?.FullName</td>
+                    <td>@book.Publisher?.Name</td>
+                    <td>
+                        @if (book.BorrowerId == null)
+                        {
+                            <form method="post" asp-action="Borrow" asp-controller="Book" asp-route-id="@book.BookId">
+                            <button type="submit" class="btn btn-primary">Borrow</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <span class="text-danger">Unavailable</span>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

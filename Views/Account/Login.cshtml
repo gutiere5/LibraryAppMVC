@@ -1,10 +1,17 @@
 @{
-    ViewData["Title"] = "Login";
+    ViewData["Title"] = "Welcome to Library App";
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
 }
 
 <h2>@ViewData["Title"]</h2>
 
-<form method="post">
+<form method="post" asp-controller="Account" asp-action="Login">
     <div>
         <label for="userName">Username:</label>
         <input type="text" id="userName" name="userName" required />
@@ -18,5 +25,3 @@
     </div>
     <p>@ViewBag.ErrorMessage</p>
 </form>
-@* This is a simple login form. The form submits to the same action method. *@
-@* The error message is displayed if the login fails. *@
